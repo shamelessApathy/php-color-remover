@@ -17,6 +17,8 @@ var_dump($directory);
  <img src="<?php echo '../' . $directory ?>" id='image'/>
 
  <textarea id='rgb-code'></textarea>
+ <button type='button' id='submit'>Submit</button>
+ <div id='directory' data-attribute="<?php echo '../' . $directory ?>"></div>
  </body>
  	<script src='../js/jquery.js'></script>
  	<script src='../js/script.js'></script>
