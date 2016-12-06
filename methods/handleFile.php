@@ -1,12 +1,38 @@
 <?php
 
-$fileObject = $_FILES['image-file'];
-$fileTempName = $fileObject['tmp_name'];
-$fileName = $fileObject['name'];
-$kaboom = explode('.',$fileName);
+$file = $_FILES['image-file'];
+$tmp = $file['tmp_name'];
+$name = $file['name'];
+$kaboom = explode('.',$name);
 $ext = $kaboom[1];
 
-function RandomString()
+
+$filename = "/var/www/html/php-color-remover$tmp";
+
+$im = new Imagick($tmp);
+//$im->setImageFormat('png');
+$im->writeImage($filename);
+
+// output the image to the browser as a png
+?>
+
+<?php
+echo '<img id="image" src="data:image/jpg;base64,'.base64_encode($im->getImageBlob()).'" alt="" />';
+?>
+<canvas  id='myCanvas'>
+</canvas>
+<form action='/methods/remove-color.php' method='POST'>
+    <input id='rgb' value='' type='text' name='rgb'>
+    <input name='filename' value="<?php echo $filename;?>">
+    <button type='submit'>Submit</button>
+</form>
+<script src='../js/jquery.js'></script>
+<script src='../js/script.js'></script>
+
+
+<?php
+
+/*function RandomString()
 {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $characters = str_split($characters);
@@ -16,8 +42,8 @@ function RandomString()
     }
     return $randstring;
 }
-
-function imageCreateFromAny($filepath) {
+*/
+/*function imageCreateFromAny($filepath) {
 // Test if File sent is really an image
     $type = exif_imagetype($filepath); // [] if you don't have exif you could use getImageSize()
     $allowedTypes = array(
@@ -60,6 +86,8 @@ $pathToNewImage = 'b_tmp/' . $randomName;
 $_SESSION['image-path'] = $pathToNewImage;
 
 require('../views/edit-view.php');
+*/
+
 
 
 ?>
